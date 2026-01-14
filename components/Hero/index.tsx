@@ -1,21 +1,37 @@
 import { View, Text, StyleSheet, Image } from "react-native";
+import Animated, {
+  FadeInDown,
+} from "react-native-reanimated";
 
 export function Hero() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>iPhone</Text>
+      <Animated.Text
+        entering={FadeInDown.duration(600).springify()}
+        style={styles.title}
+      >
+        iPhone
+      </Animated.Text>
 
-      <Text style={styles.subtitle}>
+      <Animated.Text
+        entering={FadeInDown.delay(150).duration(600)}
+        style={styles.subtitle}
+      >
         Conheça a linha iPhone.
-      </Text>
+      </Animated.Text>
 
-      <Image
-        source={{
-          uri: "https://www.apple.com/v/iphone/home/bu/images/overview/hero/iphone_family__f5uqx1n4p6eu_large.png",
-        }}
-        style={styles.image}
-        resizeMode="contain"
-      />
+      <Animated.View
+        entering={FadeInDown.delay(300).duration(700)}
+        style={styles.imageWrapper}
+      >
+        <Image
+          source={{
+            uri: "https://www.apple.com/v/iphone/home/bu/images/overview/hero/iphone_family__f5uqx1n4p6eu_large.png",
+          }}
+          style={styles.image}
+          resizeMode="contain"
+        />
+      </Animated.View>
     </View>
   );
 }
@@ -38,8 +54,12 @@ const styles = StyleSheet.create({
     color: "#6e6e73",
     textAlign: "center",
   },
-  image: {
+  imageWrapper: {
     marginTop: 40,
+    width: "100%",
+    alignItems: "center",
+  },
+  image: {
     width: "100%",
     height: 260,
   },
