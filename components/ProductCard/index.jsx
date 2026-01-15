@@ -1,18 +1,23 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-
+import Animated, { FadeInUp } from "react-native-reanimated";
 /**
  * @typedef {Object} ProductCardProps
  * @property {string} name
  * @property {string} description
  * @property {string} image
+ * @property {number} index
  */
-
-/**
- * @param {ProductCardProps} props
- */
-export function ProductCard({ name, description, image }) {
+export function ProductCard({
+  name,
+  description,
+  image,
+  index,
+}) {
   return (
-    <View style={styles.card}>
+    <Animated.View
+      entering={FadeInUp.delay(index * 120).duration(500)}
+      style={styles.card}
+    >
       <Text style={styles.name}>{name}</Text>
 
       <Text style={styles.description}>{description}</Text>
@@ -32,7 +37,7 @@ export function ProductCard({ name, description, image }) {
         style={styles.image}
         resizeMode="contain"
       />
-    </View>
+    </Animated.View>
   );
 }
 
