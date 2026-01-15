@@ -5,13 +5,17 @@ import Animated, {
   Extrapolate,
 } from "react-native-reanimated";
 import type { SharedValue } from "react-native-reanimated";
-import { colors, typography, spacing } from "../../theme";
+
+import { typography, spacing } from "../../theme";
+import { useTheme } from "../../theme/useTheme";
 
 type HeroProps = {
   scrollY: SharedValue<number>;
 };
 
 export function Hero({ scrollY }: HeroProps) {
+  const colors = useTheme(); // ✅ hook no lugar certo
+
   const imageAnimatedStyle = useAnimatedStyle(() => {
     const translateY = interpolate(
       scrollY.value,
@@ -41,9 +45,19 @@ export function Hero({ scrollY }: HeroProps) {
   });
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>iPhone</Text>
-      <Text style={styles.subtitle}>Conheça a linha iPhone.</Text>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: colors.background }, // ✅ tema aplicado
+      ]}
+    >
+      <Text style={[styles.title, { color: colors.textPrimary }]}>
+        iPhone
+      </Text>
+
+      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+        Conheça a linha iPhone.
+      </Text>
 
       <Animated.View style={[styles.imageWrapper, imageAnimatedStyle]}>
         <Image
@@ -63,16 +77,13 @@ const styles = StyleSheet.create({
     paddingTop: spacing.xxl,
     paddingBottom: spacing.xxl,
     alignItems: "center",
-    backgroundColor: colors.background,
   },
   title: {
     ...typography.titleLarge,
-    color: colors.textPrimary,
   },
   subtitle: {
     marginTop: spacing.sm,
     ...typography.body,
-    color: colors.textSecondary,
     textAlign: "center",
   },
   imageWrapper: {

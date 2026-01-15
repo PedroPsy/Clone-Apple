@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import  {colors}  from "../../theme";
 
 export function Header() {
   return (
@@ -19,7 +20,7 @@ export function Header() {
 
 const styles = StyleSheet.create({
   safe: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.background,
   },
   container: {
     height: 56,

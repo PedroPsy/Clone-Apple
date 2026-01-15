@@ -7,8 +7,12 @@ import Animated, {
 import { Header } from "../../components/Header";
 import { Hero } from "../../components/Hero";
 import { ProductCard } from "../../components/ProductCard";
+import { PRODUCTS } from "../../constants/products"; 
+import { useTheme } from "../../theme/useTheme";
+
 
 export default function Home() {
+  const colors = useTheme(); 
   const scrollY = useSharedValue(0);
 
   const onScroll = useAnimatedScrollHandler({
@@ -18,7 +22,7 @@ export default function Home() {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Header />
 
       <Animated.ScrollView
@@ -29,30 +33,17 @@ export default function Home() {
         <Hero scrollY={scrollY} />
 
         <View style={{ paddingHorizontal: 16 }}>
-          <ProductCard
-              id="iphone-15-pro"
-              index={0}
-              name="iPhone 15 Pro"
-              description="O iPhone definitivo. Design em titânio."
-              image="https://www.apple.com/v/iphone/home/bu/images/overview/select/iphone_15_pro__f4p0p0xk6w2y_large.png"
-            />
-
+          {/* Mapeando os produtos dinamicamente */}
+          {PRODUCTS.map((product, index) => (
             <ProductCard
-              id="iphone-15"
-              index={1}
-              name="iPhone 15"
-              description="Uma nova câmera de 48 MP."
-              image="https://www.apple.com/v/iphone/home/bu/images/overview/select/iphone_15__e0tw6kz6l4ya_large.png"
+              key={product.id}
+              id={product.id}
+              index={index}
+              name={product.name}
+              description={product.description}
+              image={product.image}
             />
-
-            <ProductCard
-              id="iphone-se"
-              index={2}
-              name="iPhone SE"
-              description="Design clássico. Potência incrível."
-              image="https://www.apple.com/v/iphone/home/bu/images/overview/select/iphone_se__cuaa2bdndqeu_large.png"
-            />
-
+          ))}
         </View>
       </Animated.ScrollView>
     </View>
