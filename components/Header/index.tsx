@@ -12,7 +12,7 @@ export function Header() {
       <View
         style={[
           styles.container,
-          { borderBottomColor: colors.border },
+          { borderBottomColor: colors.textSecondary },
         ]}
       >
         <Text style={[styles.logo, { color: colors.textPrimary }]}>
