@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { spacing, typography } from "../../theme";
-import { useTheme } from "../../theme";
+import { spacing, typography, useTheme } from "../../theme";
 
 
 export function Header() {
