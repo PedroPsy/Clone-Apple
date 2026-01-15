@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
+import { colors, typography, spacing } from "../../theme";
+
 /**
  * @typedef {Object} ProductCardProps
  * @property {string} name
@@ -19,61 +21,54 @@ export function ProductCard({
       style={styles.card}
     >
       <Text style={styles.name}>{name}</Text>
-
       <Text style={styles.description}>{description}</Text>
 
       <View style={styles.actions}>
         <TouchableOpacity>
           <Text style={styles.link}>Saiba mais</Text>
         </TouchableOpacity>
-
         <TouchableOpacity>
           <Text style={styles.link}>Comprar</Text>
         </TouchableOpacity>
       </View>
 
-      <Image
-        source={{ uri: image }}
-        style={styles.image}
-        resizeMode="contain"
-      />
+      <Image source={{ uri: image }} style={styles.image} />
     </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#f5f5f7",
+    backgroundColor: colors.card,
     borderRadius: 20,
-    paddingVertical: 32,
-    paddingHorizontal: 16,
+    paddingVertical: spacing.xl,
+    paddingHorizontal: spacing.md,
     alignItems: "center",
-    marginBottom: 24,
+    marginBottom: spacing.lg,
   },
   name: {
-    fontSize: 28,
-    fontWeight: "600",
-    letterSpacing: -0.5,
+    ...typography.titleMedium,
+    color: colors.textPrimary,
   },
   description: {
-    marginTop: 8,
-    fontSize: 16,
-    color: "#6e6e73",
+    marginTop: spacing.sm,
+    ...typography.body,
+    color: colors.textSecondary,
     textAlign: "center",
     maxWidth: 280,
   },
   actions: {
     flexDirection: "row",
-    gap: 24,
-    marginTop: 16,
+    gap: spacing.lg,
+    marginTop: spacing.md,
   },
   link: {
-    fontSize: 16,
-    color: "#0066cc",
+    ...typography.body,
+    color: colors.link,
     fontWeight: "500",
   },
   image: {
-    marginTop: 32,
+    marginTop: spacing.xl,
     width: "100%",
     height: 220,
   },
