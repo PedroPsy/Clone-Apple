@@ -1,29 +1,51 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import Animated, {
-  FadeInDown,
+  useAnimatedStyle,
+  interpolate,
+  Extrapolate,
 } from "react-native-reanimated";
+import type { SharedValue } from "react-native-reanimated";
+import { colors, typography, spacing } from "../../theme";
 
-export function Hero() {
+type HeroProps = {
+  scrollY: SharedValue<number>;
+};
+
+export function Hero({ scrollY }: HeroProps) {
+  const imageAnimatedStyle = useAnimatedStyle(() => {
+    const translateY = interpolate(
+      scrollY.value,
+      [0, 300],
+      [0, -60],
+      Extrapolate.CLAMP
+    );
+
+    const scale = interpolate(
+      scrollY.value,
+      [0, 300],
+      [1, 0.9],
+      Extrapolate.CLAMP
+    );
+
+    const opacity = interpolate(
+      scrollY.value,
+      [0, 200],
+      [1, 0.6],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ translateY }, { scale }],
+      opacity,
+    };
+  });
+
   return (
     <View style={styles.container}>
-      <Animated.Text
-        entering={FadeInDown.duration(600).springify()}
-        style={styles.title}
-      >
-        iPhone
-      </Animated.Text>
+      <Text style={styles.title}>iPhone</Text>
+      <Text style={styles.subtitle}>Conheça a linha iPhone.</Text>
 
-      <Animated.Text
-        entering={FadeInDown.delay(150).duration(600)}
-        style={styles.subtitle}
-      >
-        Conheça a linha iPhone.
-      </Animated.Text>
-
-      <Animated.View
-        entering={FadeInDown.delay(300).duration(700)}
-        style={styles.imageWrapper}
-      >
+      <Animated.View style={[styles.imageWrapper, imageAnimatedStyle]}>
         <Image
           source={{
             uri: "https://www.apple.com/v/iphone/home/bu/images/overview/hero/iphone_family__f5uqx1n4p6eu_large.png",
@@ -38,24 +60,23 @@ export function Hero() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 48,
-    paddingBottom: 64,
+    paddingTop: spacing.xxl,
+    paddingBottom: spacing.xxl,
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: colors.background,
   },
   title: {
-    fontSize: 40,
-    fontWeight: "600",
-    letterSpacing: -0.5,
+    ...typography.titleLarge,
+    color: colors.textPrimary,
   },
   subtitle: {
-    marginTop: 12,
-    fontSize: 18,
-    color: "#6e6e73",
+    marginTop: spacing.sm,
+    ...typography.body,
+    color: colors.textSecondary,
     textAlign: "center",
   },
   imageWrapper: {
-    marginTop: 40,
+    marginTop: spacing.xl,
     width: "100%",
     alignItems: "center",
   },
