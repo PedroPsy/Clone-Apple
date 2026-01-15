@@ -1,37 +1,34 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
-import { colors, typography, spacing } from "../../theme";
+import { typography, spacing, useTheme } from "../../theme"; //
 
-/**
- * @typedef {Object} ProductCardProps
- * @property {string} id
- * @property {string} name
- * @property {string} description
- * @property {string} image
- * @property {number} index
- */
-
-/**
- * @param {ProductCardProps} props
- */
 export function ProductCard({ id, name, description, image }) {
+  const theme = useTheme();
+  
+  const colors = theme || { background: '#fff', textPrimary: '#000', textSecondary: '#666' };
+
   return (
     <TouchableOpacity 
-      style={styles.container} 
+      style={[styles.container, { backgroundColor: colors.background }]} 
       onPress={() => router.push(`/product/${id}`)}
     >
       <View style={styles.content}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.description}>{description}</Text>
+        <Text style={[styles.name, { color: colors.textPrimary }]}>{name}</Text>
+        <Text style={[styles.description, { color: colors.textSecondary }]}>
+          {description}
+        </Text>
       </View>
-      <Image source={{ uri: image }} style={styles.image} resizeMode="contain" />
+      <Image 
+        source={typeof image === 'string' ? { uri: image } : image} 
+        style={styles.image} 
+        resizeMode="contain" 
+      />
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.background, // Usando o tema centralizado
     borderRadius: 12,
     padding: spacing.lg,
     marginBottom: spacing.md,
@@ -48,7 +45,6 @@ const styles = StyleSheet.create({
   },
   description: {
     ...typography.body,
-    color: colors.textSecondary,
   },
   image: {
     width: 100,

@@ -8,8 +8,7 @@ import { Header } from "../../components/Header";
 import { Hero } from "../../components/Hero";
 import { ProductCard } from "../../components/ProductCard";
 import { PRODUCTS } from "../../constants/products"; 
-import { useTheme } from "../../theme/useTheme";
-
+import { useTheme } from "../../theme";
 
 export default function Home() {
   const colors = useTheme(); 
@@ -38,7 +37,6 @@ export default function Home() {
             <ProductCard
               key={product.id}
               id={product.id}
-              index={index}
               name={product.name}
               description={product.description}
               image={product.image}

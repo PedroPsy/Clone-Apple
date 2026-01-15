@@ -3,7 +3,7 @@ export interface Product {
   id: string;
   name: string;
   description: string;
-  image: string;
+  image: any;
 }
 
 export const PRODUCTS: Product[] = [
